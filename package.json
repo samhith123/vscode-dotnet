@@ -1,0 +1,306 @@
+{
+  "name": "vscode-dotnet",
+  "publisher": "samhithgardas",
+  "displayName": ".NET Run & Debug",
+  "description": "Run, debug, and test .NET projects with Visual Studio-like experience",
+  "version": "0.1.0",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2024 Samhith Gardas",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samhith123/vscode-dotnet.git"
+  },
+  "homepage": "https://github.com/samhith123/vscode-dotnet#readme",
+  "bugs": {
+    "url": "https://github.com/samhith123/vscode-dotnet/issues"
+  },
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Debuggers",
+    "Testing",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "dotnet.run",
+        "title": "Run Project",
+        "icon": "$(play)"
+      },
+      {
+        "command": "dotnet.debug",
+        "title": "Debug Project",
+        "icon": "$(debug)"
+      },
+      {
+        "command": "dotnet.runTests",
+        "title": "Run All Tests"
+      },
+      {
+        "command": "dotnet.runTestsWithCoverage",
+        "title": "Run Tests with Coverage"
+      },
+      {
+        "command": "dotnet.selectProject",
+        "title": "Select .NET Project"
+      },
+      {
+        "command": "dotnet.refreshProjects",
+        "title": "Refresh Projects"
+      },
+      {
+        "command": "dotnet.selectLaunchProfile",
+        "title": "Select Launch Profile"
+      },
+      {
+        "command": "dotnet.selectBuildConfig",
+        "title": "Select Build Configuration"
+      },
+      {
+        "command": "dotnet.selectPlatform",
+        "title": "Select Platform"
+      },
+      {
+        "command": "dotnet.runWithoutDebug",
+        "title": "Start Without Debugging"
+      },
+      {
+        "command": "dotnet.goToDefinition",
+        "title": "Go to Definition",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "dotnet.goToImplementation",
+        "title": "Go to Implementation",
+        "icon": "$(symbol-implementation)"
+      },
+      {
+        "command": "dotnet.peekDefinition",
+        "title": "Peek Definition",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "dotnet.peekImplementation",
+        "title": "Peek Implementation",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "dotnet.goToTypeDefinition",
+        "title": "Go to Type Definition",
+        "icon": "$(symbol-class)"
+      },
+      {
+        "command": "dotnet.goToReferences",
+        "title": "Go to References",
+        "icon": "$(references)"
+      },
+      {
+        "command": "dotnet.goToDeclaration",
+        "title": "Go to Declaration",
+        "icon": "$(symbol-variable)"
+      },
+      {
+        "command": "dotnet.findAllReferences",
+        "title": "Find All References",
+        "icon": "$(search)"
+      },
+      {
+        "command": "dotnet.enableCtrlClickNavigation",
+        "title": "Enable Ctrl+Click Navigation",
+        "icon": "$(link)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "dotnet.goToDefinition",
+          "when": "editorHasDefinitionProvider && resourceLangId == csharp",
+          "group": "navigation@1"
+        },
+        {
+          "command": "dotnet.goToImplementation",
+          "when": "editorHasImplementationProvider && resourceLangId == csharp",
+          "group": "navigation@2"
+        },
+        {
+          "command": "dotnet.peekDefinition",
+          "when": "editorHasDefinitionProvider && resourceLangId == csharp",
+          "group": "navigation@3"
+        },
+        {
+          "command": "dotnet.peekImplementation",
+          "when": "editorHasImplementationProvider && resourceLangId == csharp",
+          "group": "navigation@4"
+        },
+        {
+          "command": "dotnet.goToTypeDefinition",
+          "when": "editorHasTypeDefinitionProvider && resourceLangId == csharp",
+          "group": "navigation@5"
+        },
+        {
+          "command": "dotnet.goToReferences",
+          "when": "editorHasReferencesProvider && resourceLangId == csharp",
+          "group": "navigation@6"
+        },
+        {
+          "command": "dotnet.findAllReferences",
+          "when": "editorHasReferencesProvider && resourceLangId == csharp",
+          "group": "navigation@7"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "dotnet.run",
+          "when": "true"
+        },
+        {
+          "command": "dotnet.debug",
+          "when": "true"
+        },
+        {
+          "command": "dotnet.runTests",
+          "when": "true"
+        },
+        {
+          "command": "dotnet.runTestsWithCoverage",
+          "when": "true"
+        },
+        {
+          "command": "dotnet.selectProject",
+          "when": "true"
+        },
+        {
+          "command": "dotnet.refreshProjects",
+          "when": "true"
+        },
+        {
+          "command": "dotnet.selectLaunchProfile",
+          "when": "true"
+        }
+      ]
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "dotnetTestExplorer",
+          "name": ".NET Tests",
+          "when": "true"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "dotnet",
+          "title": ".NET",
+          "icon": "$(code)"
+        }
+      ]
+    },
+    "configuration": {
+      "title": ".NET Run & Debug",
+      "properties": {
+        "dotnet.path": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the .NET CLI executable. Leave empty to use the system PATH."
+        },
+        "dotnet.testFramework": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "xunit",
+            "nunit",
+            "mstest"
+          ],
+          "default": "auto",
+          "description": "Preferred test framework. Use 'auto' to detect automatically."
+        },
+        "dotnet.autoDetectProjects": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically detect .NET projects in the workspace."
+        },
+        "dotnet.coverage.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable code coverage collection when running tests."
+        },
+        "dotnet.coverage.format": {
+          "type": "string",
+          "enum": [
+            "cobertura",
+            "lcov",
+            "json",
+            "opencover"
+          ],
+          "default": "cobertura",
+          "description": "Code coverage report format."
+        },
+        "dotnet.runArguments": {
+          "type": "string",
+          "default": "",
+          "description": "Additional arguments to pass to 'dotnet run' command."
+        },
+        "dotnet.debugConfig": {
+          "type": "object",
+          "default": {},
+          "description": "Custom debug configuration overrides."
+        },
+        "dotnet.enableCtrlClickNavigation": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Visual Studio-like Ctrl+Click navigation for all symbol types (classes, methods, properties, variables, interfaces, etc.). Requires C# extension to be installed."
+        },
+        "dotnet.ctrlClickBehavior": {
+          "type": "string",
+          "enum": [
+            "gotoDefinition",
+            "peekDefinition",
+            "gotoOrPeek"
+          ],
+          "default": "gotoOrPeek",
+          "description": "Behavior when Ctrl+Clicking: 'gotoDefinition' navigates directly, 'peekDefinition' shows in peek view, 'gotoOrPeek' shows peek for multiple locations or navigates for single location."
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "dotnet.goToDefinition",
+        "key": "ctrl+f12",
+        "when": "editorTextFocus && resourceLangId == csharp"
+      },
+      {
+        "command": "dotnet.goToImplementation",
+        "key": "ctrl+shift+f12",
+        "when": "editorTextFocus && resourceLangId == csharp"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.74.0",
+    "@types/xml2js": "^0.4.11",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "xml2js": "^0.6.2"
+  }
+}
