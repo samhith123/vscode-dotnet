@@ -465,4 +465,4 @@ For issues, questions, or feature requests:
 
 ---
 
-**Last Updated**: 2024
+**Last Updated**: 2025

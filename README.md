@@ -234,7 +234,7 @@ npm run lint
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Copyright (c) 2024 Samhith Gardas
+Copyright (c) 2025 Samhith Gardas
 
 ## Questions and Feedback
 
