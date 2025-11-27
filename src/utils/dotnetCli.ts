@@ -203,10 +203,21 @@ export class DotNetCli {
             type = 'library';
         }
 
-        // Extract target framework
-        const tfMatch = projectContent.match(/<TargetFramework[^>]*>([^<]+)<\/TargetFramework>/i);
+        // Extract target framework - supports both TargetFramework and TargetFrameworks
+        let tfMatch = projectContent.match(/<TargetFramework[^>]*>([^<]+)<\/TargetFramework>/i);
+        if (!tfMatch) {
+            // Try TargetFrameworks (plural) for multi-targeting projects
+            tfMatch = projectContent.match(/<TargetFrameworks[^>]*>([^<]+)<\/TargetFrameworks>/i);
+        }
         if (tfMatch) {
-            targetFramework = tfMatch[1];
+            targetFramework = tfMatch[1].split(';')[0]; // Use first framework if multiple
+        } else {
+            // Try to detect .NET Framework version from other indicators
+            if (projectContent.includes('net4') || projectContent.includes('netframework')) {
+                targetFramework = 'net48'; // Default to .NET Framework 4.8
+            } else if (projectContent.includes('netstandard')) {
+                targetFramework = 'netstandard2.1'; // Default to .NET Standard 2.1
+            }
         }
 
         return {
